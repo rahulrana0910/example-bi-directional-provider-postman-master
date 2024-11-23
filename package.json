@@ -1,0 +1,28 @@
+{
+  "name": "product-service",
+  "version": "1.0.0",
+  "description": "Collaborative contracts example, using Dredd and OAS to validate the provider API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "pretest": "rimraf newman",
+    "test:newman": "newman run -e ./test/localhost3001.postman_environment.json test/PactflowProductsAPI.postman_collection.json -r cli,json",
+    "test": "concurrently -k -s \"first\" \"npm start\" \"sleep 3 && npm run test:newman\"",
+    "test:convert": "node test/transform.js",
+    "test:publish": "EXIT_CODE=0 make publish_provider_contract"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.0.1",
+    "newman": "^6.2.1",
+    "rimraf": "^6.0.1"
+  },
+  "devDependencies": {
+    "axios": "^1.7.7",
+    "concurrently": "^9.0.1",
+    "dotenv": "^16.4.5",
+    "eslint": "^9.12.0",
+    "postman2openapi": "^1.2.1"
+  },
+  "license": "ISC"
+}
